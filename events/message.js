@@ -1,4 +1,5 @@
 const config = require("../config");
+const {join} = require("path");
 
 module.exports = async (client, message) => {
   if (message.channel.type !== "text") return;
@@ -6,11 +7,13 @@ module.exports = async (client, message) => {
 /*  if (!message.member.roles.cache.has(config.STAFF_ROLE))
     return message.channel.send("no permission");*/
 
+
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
   const cmdName = args.shift().toLowerCase();
- /* const cmd = client.commands.find((x) => x.help.name === cmdName);*/
-  const commands = client.commands.toString();
-  return message.channel.send(`cmd is  ${cmdName} and ${commands}`)
+  const props = require(join(__dirname, "commands", cmdName));
+  client.commands.set(cmdName, props);
+  const cmd = client.commands.find((x) => x.help.name === cmdName);
+  message.channel.send(`cmd is  ${cmdName} and ${cmd}`)
 
   if (!cmd) return;
   console.log(
