@@ -6,7 +6,15 @@ module.exports = async (client, message) => {
 //  if (!message.member.roles.cache.has(config.STAFF_ROLE))
 //    return message.channel.send("no permission");
 
+/*
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
+*/
+  const args = message.content
+      .slice(config.PREFIX.length + this.help.name.length)
+      .trim()
+      .split("|")
+      .map((x) => x.trim());
+
   const cmdName = args.shift().toLowerCase();
   const cmd = client.commands.find((x) => x.help.name === cmdName);
   if (!cmd) return;
