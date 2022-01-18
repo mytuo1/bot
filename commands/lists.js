@@ -1,3 +1,4 @@
+/*
 const fetch = require("node-fetch");
 const ClickUpAPIUtils = require("../ClickUpAPIUtils");
 const config = require("../config");
@@ -35,3 +36,4 @@ exports.run = async (client, message, args) => {
 exports.help = {
   name: "lists",
 };
+*/

@@ -3,22 +3,25 @@ const ClickUpAPIUtils = require("../ClickUpAPIUtils");
 const config = require("../config");
 
 exports.run = async (client, message, args) => {
-  if (args.length !== 1)
+  if (args.length !== 2)
     return message.channel.send(
-      "You don't give me information, i cant file it. stop wasting my time >:("
+      "Please add 2 arguments with a \`\`|\`\` delimiter."
     );
 
   const task = await ClickUpAPIUtils.getTask(args[0]);
-  if (task.err) return message.channel.send(`ittim threw out the paper work... ${res1.err}`);
+  if (task.err) {
+    return message.channel.send(`Error on getting tasks: ${task.err}`);
+  }
 
-  const folder = await ClickUpAPIUtils.getFolder(task.folder.id);
-  if (!folder) return message.channel.send("faafjebhroi! folder not found!");
+  const lists = await ClickUpAPIUtils.getFLists();
+  if (!lists) return message.channel.send("Folderless lists not found.");
 
-  const res = await ClickUpAPIUtils.deleteTask(task.id);
-  if (res.err) return message.channel.send(`fdgffrg! ${res.err}`);
+  const list = lists.find((x) => x.name.toLowerCase() === args[1] || x.id === args[1]);
+  const res = await ClickUpAPIUtils.deleteTask(list.getTask(args[0]));
+  if (res.err) return message.channel.send(`Error on action! ${res.err}`);
 
   return message.channel.send(
-    `Deleted task \`\`${task.name}\`\` from list \`\`${folder.name}\`\`!`
+    `Deleted task \`\`${task.name}\`\` from list \`\`${list.name}\`\`!`
   );
 };
 

@@ -31,6 +31,22 @@ module.exports = {
       return json.lists;
     });
   },
+  /**
+   * fetches all lists
+   * @param {string} task_id
+   */
+  async getStatus(task_id) {
+    return await fetch(`https://api.clickup.com/api/v2/task/${task_id}`, {
+      method: "GET",
+      headers: {
+        Authorization: config.CLICKUP_TOKEN,
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      const json = await res.json();
+      return json.status;
+    });
+  },
 
   /**
    * fetches a list by id

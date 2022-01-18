@@ -4,16 +4,18 @@ const config = require("../config");
 
 exports.run = async (client, message, args) => {
   if (args.length === 1) {
-    const list = await ClickUpAPIUtils.getList(args[0]);
-    if (list.err) return message.channel.send(`Error fetching list: ${list.err}`);
+    const lists = await ClickUpAPIUtils.getFLists();
+    if (!lists) return message.channel.send("Folderless lists not found.");
 
-    const tasks = await ClickUpAPIUtils.getTasks(list.id);
+    const list = lists.find((x) => x.name.toLowerCase() === args[0] || x.id === args[0])
+
+    const tasks = await ClickUpAPIUtils.getTasks(list.name);
     if (tasks.err) return message.channel.send(`Error fetching tasks: ${tasks.err}`);
 
-    if (tasks.length === 0) return message.channel.send("no tasks in list");
+    if (tasks.length === 0) return message.channel.send("No tasks in list");
     return message.channel.send(
       `Tasks in the list ${list.name}:\n\`\`\`\n${tasks
-        .map((x) => `• ${x.name} | ${x.id}`)
+        .map((x) => `• ${x.name.toLowerCase()}`)
         .join("\n")}\n\`\`\``
     );
   } else {
