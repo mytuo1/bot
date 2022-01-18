@@ -1,4 +1,5 @@
 const config = require("../config");
+const {join} = require("path");
 
 module.exports = async (client, message) => {
   if (message.channel.type !== "text") return;
@@ -8,7 +9,8 @@ module.exports = async (client, message) => {
 
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
   const cmdName = args.shift().toLowerCase();
-  return message.channel.send(client.commands.find(x => x.help.name === cmdName));
+  const props = require(join(__dirname, "../commands", commandName));
+  client.commands.set(cmdName, props);
   const cmd = client.commands.find(x => x.help.name === cmdName);
   if (!cmd) return;
   console.log(
