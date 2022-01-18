@@ -15,8 +15,7 @@ module.exports = async (client, message) => {
 
 /*
   const cmd = client.commands.find(x => x.help.name === cmdName);
-*/
-  const cmd = client.commands.get(cmdName)
+*/  const cmd = (cmdName)
 
 /*
   return message.channel.send(`command is ${cmdName}`)
