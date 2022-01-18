@@ -10,10 +10,10 @@ module.exports = async (client, message) => {
   const cmdName = args.shift().toLowerCase();
   const cmd = cmdName /*client.commands.find((x) => x.help.name === cmdName);*/
   if (!cmd) return;
-  console.log(
+/*  console.log(
       `[Comamnd Execution] ${message.author.username} (${message.author.id}) ran command ${
           cmd.help.name
       }: ${cmdName} ${args.join(" ")}`
-  );
+  );*/
   return cmd.run(client, message, args);
 };
