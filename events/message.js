@@ -8,15 +8,14 @@ module.exports = async (client, message) => {
 
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
   const cmdName = args.shift().toLowerCase();
-  return message.channel.send(`cmd is  ${cmdName}`)
-  const cmd1 = cmdName /*client.commands.find((x) => x.help.name === cmdName);*/
-  const cmd = client.commands.find((x) => x.help.has(cmdName));
+  const cmd = client.commands.find((x) => x.help.name === cmdName);
+  return message.channel.send(`cmd is  ${cmdName} and ${cmd}`)
 
   if (!cmd) return;
-/*  console.log(
+  console.log(
       `[Comamnd Execution] ${message.author.username} (${message.author.id}) ran command ${
           cmd.help.name
       }: ${cmdName} ${args.join(" ")}`
-  );*/
+  );
   return cmd.run(client, message, args);
 };
