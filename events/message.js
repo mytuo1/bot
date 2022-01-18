@@ -8,7 +8,7 @@ module.exports = async (client, message) => {
 
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
   const cmdName = args.shift().toLowerCase();
-  const cmd = client.commands.find((x) => x.help.name === cmdName);
+  const cmd = cmdName /*client.commands.find((x) => x.help.name === cmdName);*/
   if (!cmd) return;
   console.log(
       `[Comamnd Execution] ${message.author.username} (${message.author.id}) ran command ${
