@@ -9,7 +9,7 @@ module.exports = async (client, message) => {
 
   const args = message.content.slice(config.PREFIX.length).trim().split(/ +/g);
   const cmdName = args.shift().toLowerCase();
-  const props = require(join(__dirname, "../commands", commandName));
+  const props = require(join(__dirname, "../commands", cmdName));
   client.commands.set(cmdName, props);
   const cmd = client.commands.find(x => x.help.name === cmdName);
   return message.channel.send(`command is ${cmd}`)
