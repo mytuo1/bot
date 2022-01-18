@@ -11,8 +11,11 @@ module.exports = async (client, message) => {
   const cmdName = args.shift().toLowerCase();
   const props = require(join(__dirname, "../commands", cmdName));
   client.commands.set(cmdName, props);
+  console.log(`[Command Initialization] Command123 Loaded: ${cmdName}`);
+/*
   const cmd = client.commands.find(x => x.help.name === cmdName);
-  return message.channel.send(`command is ${cmd}`)
+*/
+  return message.channel.send(`command is ${cmdName}`)
   if (!cmd) return;
   console.log(
       `[Comamnd Execution] ${message.author.username} (${message.author.id}) ran command ${
